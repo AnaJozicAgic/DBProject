@@ -1,6 +1,7 @@
 package muzej;
 
 import java.sql.Connection;
+import java.util.Scanner;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class MuzejDAOConcrete implements MuzejDAOInterface, AutoCloseable {
+	Scanner input = new Scanner(System.in);
 	// connect to the database
 	Connection connection = ConectionManager.getInstance().getConnection();
 
@@ -88,9 +90,6 @@ public class MuzejDAOConcrete implements MuzejDAOInterface, AutoCloseable {
 			// create an SELECT SQL query
 			String query = "UPDATE muzej SET naziv = ?, opis = ?, procjenjenaStarost = ?, lokalitet = ? WHERE ID = ?";
 
-			// new Scanner
-			java.util.Scanner input = new java.util.Scanner(System.in);
-
 			System.out.print("Set a new name for exhibit (current: " + exhibit.getNaziv() + " ): ");
 			String name = input.next();
 
@@ -102,9 +101,6 @@ public class MuzejDAOConcrete implements MuzejDAOInterface, AutoCloseable {
 
 			System.out.print("Set a new location for exhibit (current: " + exhibit.getLokalitet() + " ): ");
 			String lokalitet = input.next();
-
-			// close the scanner
-			input.close();
 
 			try (
 					// java.sql.Statement
@@ -152,9 +148,6 @@ public class MuzejDAOConcrete implements MuzejDAOInterface, AutoCloseable {
 		// create an SELECT SQL query
 		String query = "INSERT INTO muzej(naziv, opis, procjenjenaStarost, lokalitet) VALUES (?, ?, ?, ?)";
 
-		// new Scanner
-		java.util.Scanner input = new java.util.Scanner(System.in);
-
 		System.out.print("Enter exhibit name: ");
 		String name = input.next();
 
@@ -166,9 +159,6 @@ public class MuzejDAOConcrete implements MuzejDAOInterface, AutoCloseable {
 
 		System.out.print("Enter exhibits locality: ");
 		String lokalitet = input.next();
-
-		// close the scanner
-		input.close();
 
 		try (
 				// java.sql.Statement
@@ -201,8 +191,8 @@ public class MuzejDAOConcrete implements MuzejDAOInterface, AutoCloseable {
 
 	@Override
 	public void close() throws Exception {
-		// TODO Auto-generated method stub
-
+		
+		input.close();
 	}
 
 	@Override
